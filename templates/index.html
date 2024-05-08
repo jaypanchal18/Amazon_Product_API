@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+        }
+
+        .download-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Amazon Product Search</h1>
+    <form action="/" method="GET">
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="q" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    {% if results %}
+        <h2>Search Results for "{{ query }}"</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Reviews</th>
+                    <th>Ratings</th>
+                    <th>MRP</th>
+                    <th>Previous_Bought</th>
+                    <th>About</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td><img src="{{ result.ImageUrl }}" alt="Product Image" width="100"></td>
+                        <td>{{ result.Title }}</td>
+                        <td>{{ result.Price }}</td>
+                        <td>{{ result.Reviews }}</td>
+                        <td>{{ result.Ratings }}</td>
+                        <td>{{ result.MRP }}</td>
+                        <td>{{ result.Previous_Bought }}</td>
+                        <td>{{ result.About }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="download-btn">
+            <form action="/download" method="GET">
+                <input type="hidden" name="q" value="{{ query }}">
+                <button type="submit">Download as Excel</button>
+            </form>
+        </div>
+    {% endif %}
+</body>
+</html>
